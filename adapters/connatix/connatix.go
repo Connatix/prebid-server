@@ -155,35 +155,35 @@ func splitRequests(imps []openrtb2.Imp, request *openrtb2.BidRequest, uri string
 			errs = append(errs, err)
 			return nil, errs
 		}
-    
-        endpoint, err := url.Parse(uri)
-        if err != nil {
-            errs = append(errs, err)
-            fmt.Println("cnx_errors: ", errs)
-            return nil, errs
-        }
-            
-        if request.User != nil {
-            userID := strings.TrimSpace(request.User.BuyerUID)
-            
-            if len(userID) > 0 {
-                queryParams := url.Values{}
-            
-                if strings.HasPrefix(userID, "1-") {
-                    queryParams.Add("dc", "us-east-2")
-                } 
-                
-                if strings.HasPrefix(userID, "2-") {
-                    queryParams.Add("dc", "us-west-2")
-                } 
-                
-                if strings.HasPrefix(userID, "3-") {
-                    queryParams.Add("dc", "eu-west-1")
-                } 
-                
-                endpoint.RawQuery = queryParams.Encode()
-            }
-        }
+
+		endpoint, err := url.Parse(uri)
+		if err != nil {
+			errs = append(errs, err)
+			fmt.Println("cnx_errors: ", errs)
+			return nil, errs
+		}
+
+		if request.User != nil {
+			userID := strings.TrimSpace(request.User.BuyerUID)
+
+			if len(userID) > 0 {
+				queryParams := url.Values{}
+
+				if strings.HasPrefix(userID, "1-") {
+					queryParams.Add("dc", "us-east-2")
+				}
+
+				if strings.HasPrefix(userID, "2-") {
+					queryParams.Add("dc", "us-west-2")
+				}
+
+				if strings.HasPrefix(userID, "3-") {
+					queryParams.Add("dc", "eu-west-1")
+				}
+
+				endpoint.RawQuery = queryParams.Encode()
+			}
+		}
 
 		resArr = append(resArr, &adapters.RequestData{
 			Method:  "POST",
